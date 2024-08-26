@@ -1,0 +1,21 @@
+version: '3.1'                                      # Must have
+services:                                           # Must have to define one or more services that will run
+  mongodb:                                          # Label that will be used as the Container Name when running
+    image: mongo                                    # Image that will be pulled locally first, then remote if local is not available
+    ports:                                          # Exposes ports that service has <external docker port> : <docker service port>
+      - 27017:27017
+    environment:                                    # Define environment variables and their value
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: Passw0rd
+
+  mongo-express:                                    # Another service/container that will be ran
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: Passw0rd
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:                                     # This defines the startup order.  This container depends upon
+      - "mongodb"                                   # This is the container name (defined in line #3)
+
