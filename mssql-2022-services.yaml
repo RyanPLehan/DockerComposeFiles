@@ -1,8 +1,9 @@
 version: '3.8'                                          # Must have
+                                                        # Execute this file: docker compose -f mssql-2022-services.yaml up -d
 
 services:                                               # Must have to define one or more services that will run
   mssql:                                                # Label that will be used as the Container Name when running
-    container_name: sql-server                          # Over ride label above (optional)
+    container_name: sql-server                          # Over ride label above AND it eliminates the dockercompose_ prefix
     image: mcr.microsoft.com/mssql/server:2022-latest   # Image that will be pulled locally first, then remote if local is not available
     restart: always                                     # Restart Policy (Container will be restarted unitil it is explicity stopped or removed)
     ports:                                              # Exposes ports that service has <external docker port> : <docker service port>
@@ -25,3 +26,4 @@ services:                                               # Must have to define on
 
 volumes:
     sqlvolume:
+        external: true
