@@ -1,4 +1,5 @@
-version: '3.3'                                          # Must have
+version: '3.8'                                          # Must have
+
 services:                                               # Must have to define one or more services that will run
   mssql:                                                # Label that will be used as the Container Name when running
     container_name: sql-server                          # Over ride label above (optional)
@@ -12,14 +13,14 @@ services:                                               # Must have to define on
       MSSQL_PID: "Developer"                            # Choose Developer Edition (see: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-configure-environment-variables?view=sql-server-ver16#environment-variables)
       MSSQL_TCP_PORT: 1433
       MSSQL_DATA_DIR: /var/opt/mssql/data
-    volumnes:
-        - sqlvolume: sqlvolume:/var/opt/mssql/data
-        - sqlvolume: sqlvolume:/var/opt/mssql/log
-        - sqlvolume: sqlvolume:/var/opt/mssql/secrets
+    volumes:
+        - sqlvolume:/var/opt/mssql/data
+        - sqlvolume:/var/opt/mssql/log
+        - sqlvolume:/var/opt/mssql/secrets
     deploy:
         resources:
             limits:
-                cpus:'2'
+                cpus: 2
                 memory: 4G
 
 volumes:
