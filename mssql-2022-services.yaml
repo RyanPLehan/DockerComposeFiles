@@ -1,0 +1,26 @@
+version: '3.3'                                          # Must have
+services:                                               # Must have to define one or more services that will run
+  mssql:                                                # Label that will be used as the Container Name when running
+    container_name: sql-server                          # Over ride label above (optional)
+    image: mcr.microsoft.com/mssql/server:2022-latest   # Image that will be pulled locally first, then remote if local is not available
+    restart: always                                     # Restart Policy (Container will be restarted unitil it is explicity stopped or removed)
+    ports:                                              # Exposes ports that service has <external docker port> : <docker service port>
+      - 1433:1433
+    environment:                                        # Define environment variables and their value
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: Passw0rd                       # SA Password
+      MSSQL_PID: "Developer"                            # Choose Developer Edition (see: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-configure-environment-variables?view=sql-server-ver16#environment-variables)
+      MSSQL_TCP_PORT: 1433
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+    volumnes:
+        - sqlvolume: sqlvolume:/var/opt/mssql/data
+        - sqlvolume: sqlvolume:/var/opt/mssql/log
+        - sqlvolume: sqlvolume:/var/opt/mssql/secrets
+    deploy:
+        resources:
+            limits:
+                cpus:'2'
+                memory: 4G
+
+volumes:
+    sqlvolume:
