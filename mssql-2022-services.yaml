@@ -14,7 +14,10 @@ services:                                               # Must have to define on
       MSSQL_PID: "Developer"                            # Choose Developer Edition (see: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-configure-environment-variables?view=sql-server-ver16#environment-variables)
       MSSQL_TCP_PORT: 1433
       MSSQL_DATA_DIR: /var/opt/mssql/data
-    user: root                                          # Force SqlServer to run as 'root' (not as 'mssql') to access data on volumes
+    user: root                                          # Force SqlServer to run as 'root' (not as 'mssql' - starting with 2019) to access data on volumes
+                                                        # USER root
+                                                        # RUN chown -R mssql:root /var/opt/mssql
+                                                        # USER mssql
     volumes:
         - sqlvolume:/var/opt/mssql/data
         - sqlvolume:/var/opt/mssql/log
